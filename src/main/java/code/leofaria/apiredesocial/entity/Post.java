@@ -30,7 +30,7 @@ public class Post {
     @Column(name = "timestamp_post_updated")
     private LocalDateTime timestampPostUpdated;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "profileID", foreignKey = @ForeignKey(name = "fk_post_owner"))
     private Profile profileOwner;
     

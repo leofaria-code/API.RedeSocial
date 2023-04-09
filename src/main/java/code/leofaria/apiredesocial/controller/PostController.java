@@ -47,7 +47,6 @@ public class PostController {
     
     @PostMapping
     public ResponseEntity<Post> post(@RequestBody Post post){
-        post.setTimestampPostCreated(LocalDateTime.now());
         return new ResponseEntity<>(postRepository.save(post), HttpStatus.CREATED);
     }
     
@@ -70,11 +69,6 @@ public class PostController {
         }
     }
     
-    private ResponseEntity<String> responseMsgAndStatus(String msg, HttpStatus httpStatus){
-        new ResponseEntity<>(msg, httpStatus);
-        return null;
-    }
-    
     @DeleteMapping("{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
         Optional<Post> postToDelete = postRepository.findById(id);
@@ -93,5 +87,10 @@ public class PostController {
         }
         String formattedTimestamp = timestamp.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         return responseMsgAndStatus(msgAction+formattedTimestamp, httpStatus);
+    }
+    
+    private ResponseEntity<String> responseMsgAndStatus(String msg, HttpStatus httpStatus){
+        new ResponseEntity<>(msg, httpStatus);
+        return null;
     }
 }
