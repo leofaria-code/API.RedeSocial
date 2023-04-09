@@ -1,8 +1,7 @@
 package code.leofaria.apiredesocial.controller;
 
-import code.leofaria.apiredesocial.entity.Post;
-
-import code.leofaria.apiredesocial.repository.PostRepository;
+import code.leofaria.apiredesocial.entity.Profile;
+import code.leofaria.apiredesocial.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,27 +14,27 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/posts")
-public class PostController {
-    private final PostRepository postRepository;
+@RequestMapping("/users")
+public class ProfileController {
+    private final ProfileRepository profileRepository;
     
-    public PostController(@Autowired PostRepository postRepository){
-        this.postRepository = postRepository;
+    public ProfileController(@Autowired ProfileRepository profileRepository){
+        this.profileRepository = profileRepository;
     }
     
     @GetMapping
-    public ResponseEntity<List<Post>> getAll(){
-        return new ResponseEntity<>(postRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<Profile>> getAll(){
+        return new ResponseEntity<>(profileRepository.findAll(), HttpStatus.OK);
     }
     
     @GetMapping("{id}")
-    public ResponseEntity<Post> getById(@PathVariable Long id){
-        Optional<Post> postToShow = postRepository.findById(id);
-        String msgAction = "Post ID #%06d: ".formatted(id);
+    public ResponseEntity<Profile> getById(@PathVariable Long id){
+        Optional<Profile> profileToShow = profileRepository.findById(id);
+        String msgAction = "Profile ID #%06d: ".formatted(id);
         HttpStatus httpStatus;
-        if(postToShow.isPresent()){
+        if(profileToShow.isPresent()){
             httpStatus = HttpStatus.OK;
-            return new ResponseEntity<>(postRepository.getReferenceById(id), httpStatus);
+            return new ResponseEntity<>(profileRepository.getReferenceById(id), httpStatus);
         }else{
             httpStatus = HttpStatus.NOT_FOUND;
             String msgNotFound = "NÃO ENCONTRADO!\n";
@@ -46,21 +45,18 @@ public class PostController {
     }
     
     @PostMapping
-    public ResponseEntity<Post> post(@RequestBody Post post){
-        post.setTimestampPostCreated(LocalDateTime.now());
-        return new ResponseEntity<>(postRepository.save(post), HttpStatus.CREATED);
+    public ResponseEntity<Profile> post(@RequestBody Profile profile){
+        return new ResponseEntity<>(profileRepository.save(profile), HttpStatus.CREATED);
     }
     
     @PutMapping
-    public ResponseEntity<Post> put(@RequestBody Post post){
-        Optional<Post> postToEdit = postRepository.findById(post.getPostID());
+    public ResponseEntity<Profile> put(@RequestBody Profile profile){
+        Optional<Profile> profileToEdit = profileRepository.findById(profile.getProfileID());
         HttpStatus httpStatus;
-        String msgAction = "Post ID #%06d: ".formatted(post.getPostID());
-        if(postToEdit.isPresent()){
-            post.setTimestampPostCreated(postToEdit.get().getTimestampPostCreated());
-            post.setTimestampPostUpdated(LocalDateTime.now());
+        String msgAction = "Profile ID #%06d: ".formatted(profile.getProfileID());
+        if(profileToEdit.isPresent()){
             httpStatus = HttpStatus.ACCEPTED;
-            return new ResponseEntity<>(postRepository.save(post), httpStatus);
+            return new ResponseEntity<>(profileRepository.save(profile), httpStatus);
         }else{
             httpStatus = HttpStatus.NOT_FOUND;
             String msgNotFound = "NÃO ENCONTRADO!\n";
@@ -77,12 +73,12 @@ public class PostController {
     
     @DeleteMapping("{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
-        Optional<Post> postToDelete = postRepository.findById(id);
+        Optional<Profile> profileToDelete = profileRepository.findById(id);
         String msgAction = "Post ID #%06d: ".formatted(id);
         LocalDateTime timestamp = LocalDateTime.now();
         HttpStatus httpStatus;
-        if(postToDelete.isPresent()){
-            postRepository.deleteById(id);
+        if(profileToDelete.isPresent()){
+            profileRepository.deleteById(id);
             String msgFound = "ENCONTRADO e DELETADO permanentemente!\n";
             msgAction = msgAction + msgFound;
             httpStatus = HttpStatus.GONE;
