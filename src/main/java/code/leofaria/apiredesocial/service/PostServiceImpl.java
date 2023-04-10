@@ -3,7 +3,6 @@ package code.leofaria.apiredesocial.service;
 import code.leofaria.apiredesocial.entity.Post;
 import code.leofaria.apiredesocial.exceptions.EntityNotFoundException;
 import code.leofaria.apiredesocial.repository.PostRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +39,6 @@ public class PostServiceImpl implements PostService{
         throw new EntityNotFoundException("Post ID #%d não encontrado!".formatted(id));
     }
     @Override
-    @Transactional
     public void delete(Long id) throws EntityNotFoundException {
         if(!postRepository.existsById(id)) {
             throw new EntityNotFoundException("Post ID #%d não encontrado!".formatted(id));

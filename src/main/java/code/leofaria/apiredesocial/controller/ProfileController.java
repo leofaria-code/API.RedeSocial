@@ -59,7 +59,13 @@ public class ProfileController {
             String msg = msgAction + msgNotFound;
             responseMsgAndStatus(msg, httpStatus);
             return new ResponseEntity<>(httpStatus);
-        } return new ResponseEntity<>(profileRepository.save(profile), httpStatus);
+        } else {
+            Profile profileUpdating = new Profile();
+            profileUpdating.setProfileID(profile.getProfileID());
+            profileUpdating.setUsername(profile.getUsername());
+            profileUpdating.setPassword(profile.getPassword());
+            return new ResponseEntity<>(profileRepository.save(profileUpdating), httpStatus);
+        }
     }
     
     @DeleteMapping("{id}")

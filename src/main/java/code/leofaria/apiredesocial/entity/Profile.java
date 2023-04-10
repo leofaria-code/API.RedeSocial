@@ -30,7 +30,7 @@ public class Profile {
     
     private LocalDate dob;
     
-    @OneToMany(mappedBy = "profileID", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "profileID", cascade = CascadeType.ALL)
     @Column(name = "profileID")
     private List<Post> ownedPosts;
     

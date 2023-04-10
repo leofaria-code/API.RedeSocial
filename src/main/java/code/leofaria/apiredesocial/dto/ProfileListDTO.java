@@ -1,6 +1,5 @@
 package code.leofaria.apiredesocial.dto;
 
-import jakarta.persistence.Column;
 import lombok.Data;
 
 @Data
