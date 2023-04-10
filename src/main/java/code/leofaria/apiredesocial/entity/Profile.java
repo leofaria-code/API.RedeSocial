@@ -19,7 +19,7 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long profileID;
     
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String username;
     
     @Column(nullable = false)
@@ -28,18 +28,22 @@ public class Profile {
     @Column(nullable = false, updatable = false)
     private final LocalDateTime timestampProfileCreated = LocalDateTime.now();
     
-    @Column(nullable = false)
     private LocalDate dob;
     
-    @OneToMany(mappedBy = "profileOwner")
+    @OneToMany(mappedBy = "profileID", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Column(name = "profileID")
     private List<Post> ownedPosts;
     
-    @ManyToMany(mappedBy = "profilePostLike")
+    @ManyToMany(mappedBy = "profilePostLike", cascade = CascadeType.ALL)
     private List<Post> likePosts;
     
+//    @OneToMany(mappedBy = "profile")
+//    private List<Likes> likes;
+//
 //    @OneToMany(mappedBy = "profileID")
 //    private List<Profile> followers;
 //
 //    @OneToMany(mappedBy = "profileID")
 //    private List<Profile> following;
+
 }

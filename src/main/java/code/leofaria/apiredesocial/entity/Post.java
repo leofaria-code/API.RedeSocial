@@ -14,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name="posts")
 public class Post {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postID;
@@ -30,14 +31,14 @@ public class Post {
     @Column(name = "timestamp_post_updated")
     private LocalDateTime timestampPostUpdated;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "profileID", foreignKey = @ForeignKey(name = "fk_post_owner"))
-    private Profile profileOwner;
+    private Profile profileID;
     
-    @ManyToMany
-    @JoinTable(name = "post_profile_likes",
-            joinColumns = @JoinColumn(name = "postID", foreignKey = @ForeignKey(name = "fk_post_id")),
-            inverseJoinColumns = @JoinColumn(name = "profileID", foreignKey = @ForeignKey(name = "fk_owner_id")))
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "likes",
+            joinColumns = @JoinColumn(name = "postid", foreignKey = @ForeignKey(name = "fk_postid")),
+            inverseJoinColumns = @JoinColumn(name = "profileid", foreignKey = @ForeignKey(name = "fk_profileid")))
     private List<Profile> profilePostLike;
     
 }
