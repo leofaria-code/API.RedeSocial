@@ -2,6 +2,7 @@ package code.leofaria.apiredesocial.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,11 +11,11 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Data
 @Entity
 @Table(name="posts")
 public class Post {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postID;
@@ -26,7 +27,7 @@ public class Post {
     private String description;
     
     @Column(nullable = false, updatable = false)
-    private LocalDateTime timestampPostCreated = LocalDateTime.now();
+    private final LocalDateTime timestampPostCreated = LocalDateTime.now();
     
     @Column(name = "timestamp_post_updated")
     private LocalDateTime timestampPostUpdated;

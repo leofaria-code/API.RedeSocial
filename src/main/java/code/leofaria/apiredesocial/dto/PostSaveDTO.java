@@ -1,11 +1,13 @@
 package code.leofaria.apiredesocial.dto;
 
 import jakarta.validation.Valid;
+import lombok.Builder;
 import lombok.Data;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotEmpty;
 @Data
+@Builder
 public class PostSaveDTO {
     public final String MSG_notBlank= "Esse campo não pode ficar em branco!";
     public final String MSG_notNull = "Esse campo não pode ser nulo!";
@@ -25,4 +27,10 @@ public class PostSaveDTO {
     @NotNull(message = MSG_notNull)
     @NotEmpty(message = MSG_notEmpty)
     private String description;
+    
+    @Valid
+    @NotBlank(message = MSG_notBlank)
+    @NotNull(message = MSG_notNull)
+    @NotEmpty(message = MSG_notEmpty)
+    private Long profileId;
 }

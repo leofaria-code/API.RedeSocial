@@ -23,7 +23,7 @@ public class PostServiceImpl implements PostService{
     }
     @Override
     public List<Post> findByIdProfile(Long id) throws EntityNotFoundException {
-        return postRepository.findByProfileID_ProfileID(id).orElseThrow();
+        return postRepository.findByProfileID_ProfileID(id);
     }
     @Override
     public Post save(Post post) {
@@ -39,9 +39,14 @@ public class PostServiceImpl implements PostService{
         throw new EntityNotFoundException("Post ID #%d não encontrado!".formatted(id));
     }
     @Override
-    public void delete(Long id) throws EntityNotFoundException {
+    public void deleteById(Long id) throws EntityNotFoundException {
         if(!postRepository.existsById(id)) {
             throw new EntityNotFoundException("Post ID #%d não encontrado!".formatted(id));
         } postRepository.deleteById(id);
+    }
+    
+    @Override
+    public List<Post> findByProfileID(Long id) throws EntityNotFoundException {
+        return postRepository.findByProfileID_ProfileID(id);
     }
 }
