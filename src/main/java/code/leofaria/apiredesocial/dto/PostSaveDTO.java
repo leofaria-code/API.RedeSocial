@@ -6,6 +6,9 @@ import lombok.Data;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotEmpty;
+
+import java.util.List;
+
 @Data
 @Builder
 public class PostSaveDTO {
@@ -28,9 +31,7 @@ public class PostSaveDTO {
     @NotEmpty(message = MSG_notEmpty)
     private String description;
     
-    @Valid
-    @NotBlank(message = MSG_notBlank)
-    @NotNull(message = MSG_notNull)
-    @NotEmpty(message = MSG_notEmpty)
+//    @Valid
     private Long profileId;
+    private List<Long> profilePostLike;
 }

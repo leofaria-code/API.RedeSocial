@@ -1,8 +1,8 @@
 package code.leofaria.apiredesocial.controller;
 
+import code.leofaria.apiredesocial.dto.PostSaveDTO;
 import code.leofaria.apiredesocial.entity.Post;
 import code.leofaria.apiredesocial.entity.Profile;
-import code.leofaria.apiredesocial.dto.PostSaveDTO;
 import code.leofaria.apiredesocial.mapper.PostMapper;
 import code.leofaria.apiredesocial.service.PostService;
 import jakarta.validation.Valid;
@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -65,7 +64,9 @@ public class PostController {
     @PostMapping
     public ResponseEntity<Post> post(@Valid @RequestBody PostSaveDTO dto){
         Post post = mapper.postSaveDTOtoPost(dto);
-        post.setProfileID(Profile.builder().profileID(dto.getProfileId()).build());
+        post.setProfileID(Profile.builder()
+                .profileID(dto.getProfileId())
+                .build());
         return new ResponseEntity<>(postService.save(post), HttpStatus.CREATED);
     }
     
@@ -78,6 +79,24 @@ public class PostController {
             post.setTimestampPostUpdated(LocalDateTime.now());
             httpStatus = HttpStatus.ACCEPTED;
             return new ResponseEntity<>(postService.save(post), httpStatus);
+        }else{
+            httpStatus = HttpStatus.NOT_FOUND;
+            String msgNotFound = "NÃO ENCONTRADO!\n";
+            String msg = msgAction + msgNotFound;
+            responseMsgAndStatus(msg, httpStatus);
+            return new ResponseEntity<>(httpStatus);
+        }
+    }
+    
+    @PutMapping("{id}")
+    public ResponseEntity<Post> put(@PathVariable Long id, @RequestBody Post post){
+        Optional<Post> postToEdit = Optional.ofNullable(postService.findById(id));
+        HttpStatus httpStatus;
+        String msgAction = "Post ID #%06d: ".formatted(id);
+        if(postToEdit.isPresent()){
+            post.setTimestampPostUpdated(LocalDateTime.now());
+            httpStatus = HttpStatus.ACCEPTED;
+            return new ResponseEntity<>(postService.update(id, post), httpStatus);
         }else{
             httpStatus = HttpStatus.NOT_FOUND;
             String msgNotFound = "NÃO ENCONTRADO!\n";

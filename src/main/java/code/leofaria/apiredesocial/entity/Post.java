@@ -41,5 +41,5 @@ public class Post {
             joinColumns = @JoinColumn(name = "postid", foreignKey = @ForeignKey(name = "fk_postid")),
             inverseJoinColumns = @JoinColumn(name = "profileid", foreignKey = @ForeignKey(name = "fk_profileid")))
     private List<Profile> profilePostLike;
-    
+
 }

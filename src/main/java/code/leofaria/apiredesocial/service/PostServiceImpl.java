@@ -22,10 +22,6 @@ public class PostServiceImpl implements PostService{
         return postRepository.findById(id).orElseThrow();
     }
     @Override
-    public List<Post> findByIdProfile(Long id) throws EntityNotFoundException {
-        return postRepository.findByProfileID_ProfileID(id);
-    }
-    @Override
     public Post save(Post post) {
         return postRepository.save(post);
     }
