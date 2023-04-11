@@ -10,5 +10,5 @@ public interface ProfileService {
     List<Profile> listAllProfiles();
     Profile save(Profile profile);
     Profile update(Long id, Profile profile);
-    void delete(Long id);
+    void deleteById(Long id);
 }

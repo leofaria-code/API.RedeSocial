@@ -40,7 +40,6 @@ public class PostServiceImpl implements PostService{
             throw new EntityNotFoundException("Post ID #%d não encontrado!".formatted(id));
         } postRepository.deleteById(id);
     }
-    
     @Override
     public List<Post> findByProfileID(Long id) throws EntityNotFoundException {
         return postRepository.findByProfileID_ProfileID(id);

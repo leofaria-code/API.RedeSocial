@@ -41,7 +41,7 @@ public class ProfileServiceImpl implements ProfileService{
     
     @Override
     @Transactional
-    public void delete(Long id) throws EntityNotFoundException {
+    public void deleteById(Long id) throws EntityNotFoundException {
         if(!profileRepository.existsById(id)) {
             throw new EntityNotFoundException("Perfil ID #%d não encontrado!".formatted(id));
         } profileRepository.deleteById(id);
